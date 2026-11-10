@@ -13,6 +13,11 @@
     <p class="sub">NPN common-emitter &middot; voltage-divider bias &middot; forward-active approximation</p>
   </header>
 
+  <figure class="card circuit-figure">
+    <img src="{{ url_for('static', filename='circuit.svg') }}" alt="BJT Common-Emitter Voltage-Divider Bias circuit">
+    <figcaption>แผนภูมิวงจรขยายแคโทดร่วมแบบแบ่งแรงดัน: R1/R2 กำหนดแรงดันฐาน, RC และ RE กำหนดแรงดันตัวเก็บประจุและอิเตอร์</figcaption>
+  </figure>
+
   <form method="post" action="{{ url_for('calculate_bias') }}" class="card">
     <h2>Circuit values</h2>
     <div class="grid">

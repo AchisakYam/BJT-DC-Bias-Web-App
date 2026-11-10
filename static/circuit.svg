@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" width="720" height="460" role="img" aria-labelledby="circuit-title circuit-desc">
+  <title id="circuit-title">BJT Common-Emitter Voltage-Divider Bias Circuit</title>
+  <desc id="circuit-desc">Traditional engineering schematic: NPN common-emitter voltage-divider bias with VCC rail, R1/R2 base divider, RC collector resistor, RE emitter resistor, ground symbol, and Vout arrow at the collector.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#17344b"/>
+    </marker>
+    <circle id="dot" r="3" fill="#17344b"/>
+  </defs>
+  <style>
+    .wire   { stroke: #17344b; stroke-width: 2.6; fill: none; }
+    .ground { stroke: #17344b; stroke-width: 2.6; fill: none; }
+    .label  { font: 14px system-ui, "Segoe UI", "Noto Sans Thai", Tahoma, sans-serif; fill: #17344b; font-weight: 700; }
+    .comp   { font: 13px system-ui, "Segoe UI", "Noto Sans Thai", Tahoma, sans-serif; fill: #1d638b; font-weight: 700; text-anchor: middle; }
+    .node   { font: 12px system-ui, "Segoe UI", "Noto Sans Thai", Tahoma, sans-serif; fill: #546d83; text-anchor: middle; }
+  </style>
+
+  <!-- VCC rail -->
+  <line x1="40" y1="55" x2="680" y2="55" class="wire"/>
+  <text x="40" y="44" class="label">VCC</text>
+  <use href="#dot" x="40" y="55"/>
+
+  <!-- R1: VCC to Base -->
+  <line x1="150" y1="55" x2="150" y2="205" class="wire"/>
+  <text x="124" y="129" class="comp" transform="rotate(-90 124,129)">R1</text>
+  <line x1="150" y1="205" x2="205" y2="205" class="wire"/>
+
+  <!-- R2: Base to ground -->
+  <line x1="205" y1="205" x2="205" y2="345" class="wire"/>
+  <text x="230" y="275" class="comp">R2</text>
+
+  <!-- NPN transistor circle -->
+  <circle cx="265" cy="205" r="32" fill="#fff" stroke="#17344b" stroke-width="2.6"/>
+  <!-- Base lead -->
+  <line x1="205" y1="205" x2="233" y2="205" class="wire"/>
+  <!-- Collector lead (up) -->
+  <line x1="265" y1="173" x2="265" y2="55" class="wire"/>
+  <text x="288" y="129" class="comp" transform="rotate(-90 288,129)">RC</text>
+  <!-- Emitter lead (down) -->
+  <line x1="265" y1="237" x2="265" y2="345" class="wire"/>
+  <text x="290" y="292" class="comp">RE</text>
+  <!-- Emitter arrow inside circle (NPN) -->
+  <path d="M246,171 Q265,205 246,239" fill="none" stroke="#17344b" stroke-width="2.2"/>
+  <path d="M243,174 L250,168 M243,236 L250,242" fill="none" stroke="#17344b" stroke-width="2.2"/>
+
+  <!-- Node labels -->
+  <text x="195" y="185" class="node">Base</text>
+  <text x="300" y="185" class="node">Collector</text>
+  <text x="265" y="250" class="node">Emitter</text>
+
+  <!-- Ground symbol at R2 bottom -->
+  <g transform="translate(197,345)">
+    <line x1="0" y1="0" x2="34" y2="0" class="ground"/>
+    <line x1="9" y1="0" x2="9" y2="9" class="ground"/>
+    <line x1="4" y1="9" x2="30" y2="9" class="ground"/>
+    <line x1="12" y1="9" x2="12" y2="13" class="ground"/>
+    <line x1="22" y1="9" x2="22" y2="13" class="ground"/>
+  </g>
+
+  <!-- Ground symbol at RE bottom -->
+  <g transform="translate(257,345)">
+    <line x1="0" y1="0" x2="34" y2="0" class="ground"/>
+    <line x1="9" y1="0" x2="9" y2="9" class="ground"/>
+    <line x1="4" y1="9" x2="30" y2="9" class="ground"/>
+    <line x1="12" y1="9" x2="12" y2="13" class="ground"/>
+    <line x1="22" y1="9" x2="22" y2="13" class="ground"/>
+  </g>
+
+  <!-- Vout arrow from Collector -->
+  <line x1="265" y1="55" x2="680" y2="55" class="wire"/>
+  <line x1="680" y1="55" x2="680" y2="105" class="wire" marker-end="url(#arrow)"/>
+  <text x="690" y="79" class="node">Vout (VC)</text>
+
+</svg>

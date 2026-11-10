@@ -57,6 +57,25 @@ body {
   color: var(--blue);
 }
 
+.circuit-figure {
+  margin: 0 0 16px;
+  text-align: center;
+  background: #fbfdff;
+}
+
+.circuit-figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.circuit-figure figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
