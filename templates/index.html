@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BJT DC Bias Calculator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="shell">
+  <header class="hero">
+    <h1>BJT DC Bias Calculator</h1>
+    <p class="sub">NPN common-emitter &middot; voltage-divider bias &middot; forward-active approximation</p>
+  </header>
+
+  <form method="post" action="{{ url_for('calculate_bias') }}" class="card">
+    <h2>Circuit values</h2>
+    <div class="grid">
+      <label>
+        <span>V<sub>CC</sub> <small>V</small></span>
+        <input type="text" inputmode="decimal" name="vcc" value="{{ form.vcc }}">
+      </label>
+      <label>
+        <span>&beta; <small>dimensionless</small></span>
+        <input type="text" inputmode="decimal" name="beta" value="{{ form.beta }}">
+      </label>
+      <label>
+        <span>V<sub>BE</sub> <small>V</small></span>
+        <input type="text" inputmode="decimal" name="vbe" value="{{ form.vbe }}">
+      </label>
+      <label>
+        <span>R<sub>1</sub> <small>k&Omega;</small></span>
+        <input type="text" inputmode="decimal" name="r1" value="{{ form.r1 }}">
+      </label>
+      <label>
+        <span>R<sub>2</sub> <small>k&Omega;</small></span>
+        <input type="text" inputmode="decimal" name="r2" value="{{ form.r2 }}">
+      </label>
+      <label>
+        <span>R<sub>C</sub> <small>k&Omega;</small></span>
+        <input type="text" inputmode="decimal" name="rc" value="{{ form.rc }}">
+      </label>
+      <label>
+        <span>R<sub>E</sub> <small>k&Omega;</small></span>
+        <input type="text" inputmode="decimal" name="re" value="{{ form.re }}">
+      </label>
+    </div>
+    <button type="submit">Calculate DC Bias</button>
+  </form>
+
+  {% if errors %}
+  <section class="card error" aria-live="polite">
+    <h2>Check your input</h2>
+    <ul>
+      {% for message in errors %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if result %}
+  <section class="card">
+    <h2>DC operating point</h2>
+    <p class="region region--{{ result.region.value }}">
+      Operating region: <strong>{{ result.region.value|title }}</strong>
+    </p>
+
+    {% if result.warnings %}
+    <ul class="warning">
+      {% for message in result.warnings %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <table>
+      <thead>
+        <tr><th>Quantity</th><th>Value</th><th>Unit</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>V<sub>TH</sub></td><td>{{ '%.3f'|format(result.vth) }}</td><td>V</td></tr>
+        <tr><td>R<sub>TH</sub></td><td>{{ '%.3f'|format(result.rth / 1000.0) }}</td><td>k&Omega;</td></tr>
+        <tr><td>V<sub>B</sub></td><td>{{ '%.3f'|format(result.vb) }}</td><td>V</td></tr>
+        <tr><td>V<sub>E</sub></td><td>{{ '%.3f'|format(result.ve) }}</td><td>V</td></tr>
+        <tr><td>V<sub>C</sub></td><td>{{ '%.3f'|format(result.vc) }}</td><td>V</td></tr>
+        <tr><td>V<sub>CE</sub></td><td>{{ '%.3f'|format(result.vce) }}</td><td>V</td></tr>
+        <tr><td>I<sub>B</sub></td><td>{{ '%.3f'|format(result.ib * 1e6) }}</td><td>&micro;A</td></tr>
+        <tr><td>I<sub>C</sub></td><td>{{ '%.3f'|format(result.ic * 1e3) }}</td><td>mA</td></tr>
+        <tr><td>I<sub>E</sub></td><td>{{ '%.3f'|format(result.ie * 1e3) }}</td><td>mA</td></tr>
+      </tbody>
+    </table>
+  </section>
+  {% endif %}
+
+  <footer class="foot">
+    Model limits: forward-active approximation with constant &beta; and constant V<sub>BE</sub>.
+    Results in cutoff or saturation are warnings, not verified operating points. This is not SPICE.
+  </footer>
+</main>
+</body>
+</html>

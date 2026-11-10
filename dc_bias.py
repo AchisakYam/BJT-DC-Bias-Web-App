@@ -76,18 +76,6 @@ class BiasResult:
     region: Region
     warnings: tuple[str, ...]
 
-    @property
-    def ic_ma(self) -> float:
-        return self.ic * 1e3
-
-    @property
-    def ie_ma(self) -> float:
-        return self.ie * 1e3
-
-    @property
-    def ib_ua(self) -> float:
-        return self.ib * 1e6
-
 
 def _to_float(field: str, raw: str | None, errors: list[str]) -> float | None:
     text = (raw or "").strip()
