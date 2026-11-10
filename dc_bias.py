@@ -83,10 +83,14 @@ def _to_float(field: str, raw: str | None, errors: list[str]) -> float | None:
         errors.append(f"{field.upper()} is required")
         return None
     try:
-        return float(text)
+        value = float(text)
     except ValueError:
         errors.append(f"{field.upper()} must be a number")
         return None
+    if not math.isfinite(value):
+        errors.append(f"{field.upper()} must be a finite number")
+        return None
+    return value
 
 
 def parse_form(raw: Mapping[str, str]) -> BiasInputs:

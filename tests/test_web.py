@@ -40,3 +40,20 @@ class WebTest(unittest.TestCase):
         body = response.get_data(as_text=True)
         self.assertIn("R1", body)
         self.assertNotIn("8.052", body)
+
+    def test_post_cutoff_shows_warning(self):
+        body = self.client.post("/calculate", data=dict(REFERENCE, r2="1")).get_data(as_text=True)
+        self.assertIn("Cutoff", body)
+        self.assertIn('class="warning"', body)
+
+    def test_post_saturation_shows_warning(self):
+        body = self.client.post("/calculate", data=dict(REFERENCE, rc="8.6")).get_data(as_text=True)
+        self.assertIn("Saturation", body)
+        self.assertIn('class="warning"', body)
+
+    def test_post_non_finite_value_shows_error(self):
+        response = self.client.post("/calculate", data=dict(REFERENCE, r1="nan"))
+        self.assertEqual(response.status_code, 200)
+        body = response.get_data(as_text=True)
+        self.assertIn("R1 must be a finite number", body)
+        self.assertNotIn("8.052", body)

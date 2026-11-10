@@ -73,7 +73,7 @@ shown. Values outside the forward-active region produce a warning.
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-Expected: `Ran 17 tests` … `OK`. This covers the engineering module (reference case,
+Expected: `Ran 21 tests` … `OK`. This covers the engineering module (reference case,
 unit conversion, cutoff, saturation, validation) and the HTTP routes through the
 Flask test client.
 

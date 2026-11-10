@@ -117,6 +117,17 @@ class ValidationTest(unittest.TestCase):
             dc_bias.parse_form(raw)
         self.assertTrue(any("VBE" in message for message in ctx.exception.errors))
 
+    def test_non_finite_values_rejected(self):
+        for field, raw_value in (("r1", "nan"), ("vcc", "inf"), ("r2", "1e999")):
+            raw = dict(dc_bias.DEFAULTS)
+            raw[field] = raw_value
+            with self.assertRaises(dc_bias.ValidationError) as ctx:
+                dc_bias.parse_form(raw)
+            self.assertTrue(
+                any(field.upper() in message for message in ctx.exception.errors),
+                f"{field}={raw_value} was not reported: {ctx.exception.errors}",
+            )
+
     def test_minimum_beta_computes(self):
         raw = dict(dc_bias.DEFAULTS)
         raw["beta"] = "1"
