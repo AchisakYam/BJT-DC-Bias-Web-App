@@ -78,3 +78,27 @@ The form accepts kΩ for R1, R2, RC, RE. `dc_bias.parse_form` performs the singl
 kΩ → Ω conversion; `dc_bias.calculate` receives ohms only. The test
 `test_kilo_form_and_ohm_form_agree` proves both routes give an identical
 `BiasResult`.
+
+Lab 03 adds RB (kΩ) for fixed and emitter bias; the same single conversion point
+handles it in `parse_form`.
+
+## 6. Lab 03 browser acceptance (A1–A5)
+
+Shared values: VCC = 12 V, RC = 2.2 kΩ, β = 100, VBE = 0.70 V. Method: OpenCode
+Browser Tool against `http://127.0.0.1:5000/`; each row was submitted through the
+real form and read back from the rendered page.
+
+| ID | Input | Expected (hand calculation) | Observed | Method | Status |
+|----|-------|-----------------------------|----------|--------|--------|
+| A1 | Divider · R1=100, R2=22, RE=1 kΩ | IC 1.230 mA, VCE 8.052 V | IC 1.230 mA, VCE 8.052 V | Browser | PASS |
+| A2 | Fixed · RB=1000 kΩ | IB=(12−0.7)/1 MΩ=11.300 µA → IC 1.130 mA, VCE 9.514 V | IC 1.130 mA, VCE 9.514 V | Browser | PASS |
+| A3 | Emitter · RB=1000, RE=1 kΩ | IB=11.3/(1 MΩ+101 kΩ)=10.263 µA → IC 1.026 mA, VCE 8.705 V | IC 1.026 mA, VCE 8.705 V | Browser | PASS |
+| A4 | Emitter · same as A3 but RE=2 kΩ | IC must fall (denominator grows): 0.940 mA, VCE 8.033 V | IC 0.940 mA | Browser | PASS |
+| A5 | Fixed · RB=0 | Error naming RB, app must not crash or show a previous result | "RB must be greater than 0 (kΩ)", no result table | Browser | PASS |
+
+A1 confirms the original divider case is unchanged. A3 → A4 confirms RE reached the
+equation: increasing RE from 1 kΩ to 2 kΩ lowers IC. Independent arithmetic for A2:
+VC = 12 − 1.130 mA × 2.2 kΩ = 9.514 V, VE = 0 V, so VCE = 9.514 V. For A3:
+VE = 1.037 V, VC = 9.742 V, VCE = 8.705 V.
+
+Automated equivalents live in `tests/test_lab03.py`; all 35 tests pass.

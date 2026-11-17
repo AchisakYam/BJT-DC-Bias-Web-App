@@ -201,6 +201,53 @@ th:nth-child(2) {
   color: var(--amber);
 }
 
+.mode-picker {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px 14px;
+  margin: 0 0 18px;
+  background: #fbfdff;
+}
+
+.mode-picker legend {
+  padding: 0 6px;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.mode-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+}
+
+.mode-option {
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+}
+
+.mode-option input {
+  width: auto;
+  margin: 0;
+}
+
+.mode-field {
+  display: none;
+}
+
+form:has(#mode-divider:checked) .field--divider,
+form:has(#mode-fixed:checked) .field--fixed,
+form:has(#mode-emitter:checked) .field--emitter {
+  display: flex;
+}
+
+.mode-note {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .foot {
   margin-top: 22px;
   color: var(--muted);
